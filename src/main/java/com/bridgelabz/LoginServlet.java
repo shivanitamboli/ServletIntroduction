@@ -1,20 +1,21 @@
 package com.bridgelabz;
-        import javax.servlet.RequestDispatcher;
-        import javax.servlet.ServletException;
-        import javax.servlet.annotation.WebInitParam;
-        import javax.servlet.annotation.WebServlet;
-        import javax.servlet.http.HttpServlet;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-        import java.io.IOException;
-        import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(
         description = "Login Servlet Testing",
         urlPatterns = {"/LoginServlet"},
         initParams = {
                 @WebInitParam(name = "user", value = "shivani"),
-                @WebInitParam(name = "password", value = "1234")
+                @WebInitParam(name = "password", value = "shivani")
         }
 )
 public class LoginServlet extends HttpServlet {
@@ -36,6 +37,17 @@ public class LoginServlet extends HttpServlet {
             PrintWriter out= resp.getWriter();
             out.println("<font color=red> Either User Name Or Password is Wrong </font> ");
             rd.include(req,resp);
+        }
+        // UC3 : Validating name of the user
+        String nameValidate = "^[A-Z][a-z]{2,}";
+        if(userID.equals(user) && userID.matches(nameValidate) && password.equals(pwd)) {
+            req.setAttribute("user",user);
+            req.getRequestDispatcher("LoginSuccess.jsp").forward(req, resp);
+        } else {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+            PrintWriter out  = resp.getWriter();
+            out.println("<font color = red> Either username or password is wrong</font>");
+            rd.include(req, resp);
         }
     }
 }

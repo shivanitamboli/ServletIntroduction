@@ -1,4 +1,4 @@
-package com.ServletNew;
+package com.bridgelabz;
 
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
